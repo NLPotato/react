@@ -1,0 +1,8 @@
+.game {
+  display: flex;
+  /*dipaly:flex -> default flex-direction: row;*/
+}
+
+.game-info {
+  margin-left: 20px;
+}
