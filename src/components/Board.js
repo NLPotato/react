@@ -5,11 +5,13 @@ import "./Board.css"
 const Board = () => {
   // hooks
   const [squares, setSquares] = useState(Array(9).fill(null));
+  const [XIsNext, setXIsNext] = useState(true);
 
   const handleClick = (i) => {
     const newSquares = squares.slice();
-    newSquares[i] = 'X';
+    newSquares[i] = XIsNext ? 'X' : 'O';
     setSquares(newSquares);
+    setXIsNext(!XIsNext);
   }
 
   const renderSquare = (i) => {
@@ -18,9 +20,31 @@ const Board = () => {
       onClick={() => handleClick(i)} />
   }
 
+  const haveWinner = (squares) => {
+    const lines = [
+      [0, 1, 2], // row 1
+      [3, 4, 5], // row 2
+      [6, 7, 8], // row 3
+      [0, 3, 6], // col 1
+      [1, 4, 7], // col 2
+      [2, 5, 8], // col 3
+      [0, 4, 8], // diagonal 1
+      [2, 4, 6], // diagonal 2
+    ]
+    for (let line of lines) {
+      const [a, b, c] = line;
+      if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c])
+        return squares[a];
+    }
+    return null;
+  }
+  const winner = haveWinner(squares);
+  let status;
+  winner ? status = `Winner: ${ winner }` : status = `Next Player: ${ XIsNext ? 'X' : 'O' }`;
+
   return (
     <div>
-      <div className="status">Next Player: X, O</div>
+      <div className="status">{status}</div>
       <div className="board-row">
         {renderSquare(0)}
         {renderSquare(1)}
