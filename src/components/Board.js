@@ -1,23 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Square from './Square'
 import "./Board.css"
 
-const Board = () => {
-  // hooks
-  const [squares, setSquares] = useState(Array(9).fill(null));
-  const [XIsNext, setXIsNext] = useState(true);
-
-  const handleClick = (i) => {
-    const newSquares = squares.slice();
-    newSquares[i] = XIsNext ? 'X' : 'O';
-    setSquares(newSquares);
-    setXIsNext(!XIsNext);
-  }
-
+const Board = ({ squares, xIsNext, handleClick }) => {
   const renderSquare = (i) => {
     return <Square
       value={squares[i]}
-      onClick={() => handleClick(i)} />
+      onClick={handleClick} />
   }
 
   const haveWinner = (squares) => {
@@ -40,7 +29,7 @@ const Board = () => {
   }
   const winner = haveWinner(squares);
   let status;
-  winner ? status = `Winner: ${ winner }` : status = `Next Player: ${ XIsNext ? 'X' : 'O' }`;
+  winner ? status = `Winner: ${ winner }` : status = `Next Player: ${ xIsNext ? 'X' : 'O' }`;
 
   return (
     <div>
