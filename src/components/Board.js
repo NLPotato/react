@@ -2,11 +2,11 @@ import React from 'react'
 import Square from './Square'
 import "./Board.css"
 
-const Board = ({ squares, xIsNext, handleClick }) => {
+const Board = ({ squares, xIsNext, onClick }) => {
   const renderSquare = (i) => {
     return <Square
       value={squares[i]}
-      onClick={handleClick} />
+      onClick={onClick} />
   }
 
   const haveWinner = (squares) => {
